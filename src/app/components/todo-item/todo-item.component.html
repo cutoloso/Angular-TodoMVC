@@ -2,9 +2,12 @@
   class="todo-item d-flex justify-content-between align-items-center"
   (mouseover)="isHover = true"
   (mouseleave)="isHover = false">
-  <div class="todo text-center d-flex align-items-center">
-    <input type="checkbox" id="todo-label" class="todo-checkbox d-none">
-    <label for="todo-label" class="todo-label"></label>
+  <div class="todo d-flex align-items-center w-100">
+    <input type="checkbox" [id]="todo.id"
+           class="todo-checkbox d-none"
+          [checked]="todo.isComplete"
+          (change)="changeTodoStatus()">
+    <label [for]="todo.id" class="todo-label w-100" [class.is-checked]="todo.isComplete">{{todo.content}}</label>
   </div>
   <div class="d-flex justify-content-between align-items-center action-buttons">
     <span class="icon-wrapper text-center edit-btn text-info" [class.active]="isHover" (click)="isEditing = true">
