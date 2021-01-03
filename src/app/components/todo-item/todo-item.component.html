@@ -1,0 +1,21 @@
+<div
+  class="todo-item d-flex justify-content-between align-items-center"
+  (mouseover)="isHover = true"
+  (mouseleave)="isHover = false">
+  <div class="todo text-center d-flex align-items-center">
+    <input type="checkbox" id="todo-label" class="todo-checkbox d-none">
+    <label for="todo-label" class="todo-label"></label>
+  </div>
+  <div class="d-flex justify-content-between align-items-center action-buttons">
+    <span class="icon-wrapper text-center edit-btn text-info" [class.active]="isHover" (click)="isEditing = true">
+      <i class="eva eva-edit-outline d-block"></i>
+    </span>
+    <span class="icon-wrapper text-center delete-btn text-danger" [class.active]="isHover">
+      <i class="eva eva-close-outline d-block"></i>
+    </span>
+  </div>
+
+  <form action="" *ngIf="isEditing" class="edit-form">
+    <input type="text">
+  </form>
+</div>
