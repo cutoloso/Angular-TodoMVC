@@ -38,6 +38,7 @@ export class TodoService {
     const id = new Date(Date.now()).getTime();
     const newTodo = new Todo(id, todoContent);
     this.todos.unshift(newTodo);
+    this.filteredTodos.unshift(newTodo);
     this.updateToLocalStorage();
   }
 
