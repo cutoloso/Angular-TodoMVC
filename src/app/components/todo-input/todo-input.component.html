@@ -3,4 +3,6 @@
   type="text"
   placeholder="What need to be done?"
   required
+  [(ngModel)]="todoContent"
+  (keyup.enter)="onSubmit()"
 />
