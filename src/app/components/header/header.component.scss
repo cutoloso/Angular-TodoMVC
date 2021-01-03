@@ -1,0 +1,23 @@
+:host {
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+}
+.icon-wrapper {
+  width: 40px;
+  line-height: 45px;
+  font-size: 40px;
+  color: grey;
+  background: #fff;
+  transition: 250ms all ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: black;
+  }
+}
+
+app-todo-input {
+  width: 100%;
+}
