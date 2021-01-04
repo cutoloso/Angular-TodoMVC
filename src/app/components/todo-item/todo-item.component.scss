@@ -59,7 +59,7 @@
   .edit-form {
     content: '';
     position: absolute;
-    width: calc(100% - 65px);
+    width: calc(100% - 55px);
     height: 100%;
     top: 0;
     right: 0;
@@ -72,6 +72,7 @@
       padding: 10px;
       font-size: 25px;
       outline: none;
+      color: #4d4d4d;
     }
   }
 }
