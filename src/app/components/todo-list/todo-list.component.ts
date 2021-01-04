@@ -14,10 +14,38 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  /**
+   *
+   */
+  getTodos() {
     this.todos$ = this.todoService.todos$;
   }
 
+  /**
+   * Sự kiện câp nhật trạng thái 1 todo
+   * @param todo: todo đã cập nhật
+   */
   onChangeTodoStatus(todo: Todo): void {
     this.todoService.changeStatus(todo.id, todo.isComplete);
+  }
+
+  /**
+   * Cập nhật nội dung 1 todo
+   * @param todo: todo đã cập nhật
+   */
+  onEditTodo(todo: Todo): void {
+    this.todoService.editTodo(todo.id, todo.content);
+  }
+
+  /**
+   * Xoá 1 todo
+   * @param todo: todo muốn xoá
+   */
+  onDeleteTodo(todo: Todo): void {
+    this.todoService.deleteTodo(todo.id);
+    this.getTodos();
   }
 }

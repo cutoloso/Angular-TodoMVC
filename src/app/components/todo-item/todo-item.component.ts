@@ -9,6 +9,8 @@ import {Todo} from '../../models/todo.model';
 export class TodoItemComponent implements OnInit {
   @Input() todo: Todo;
   @Output() changeStatus: EventEmitter<Todo> = new EventEmitter<Todo>();
+  @Output() editTodo: EventEmitter<Todo> = new EventEmitter<Todo>();
+  @Output() deleteTodo: EventEmitter<Todo> = new EventEmitter<Todo>();
 
   isHover: boolean;
   isEditing: boolean;
@@ -18,7 +20,25 @@ export class TodoItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Cập nhật trạng thái todo
+   */
   changeTodoStatus(): void {
     this.changeStatus.emit({...this.todo, isComplete: !this.todo.isComplete});
+  }
+
+  /**
+   * Cập nhật nội dung todo
+   */
+  onEditTodo(): void {
+    this.editTodo.emit(this.todo);
+    this.isEditing = false;
+  }
+
+  /**
+   * Xoá todo
+   */
+  onDeleteTodo(): void {
+    this.deleteTodo.emit(this.todo);
   }
 }

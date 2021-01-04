@@ -22,6 +22,9 @@ export class TodoService {
   constructor(private localStorage: LocalStorageService) {
   }
 
+  /**
+   * Lấy danh sách todo đã lưu từ local storage
+   */
   fetchFromLocalStorage(): void {
     this.todos = this.localStorage.getValue(TodoService.todoStorageKey) || [];
     this.currentFilter = Filter.All;
@@ -29,30 +32,70 @@ export class TodoService {
     this.updateTodosData();
   }
 
+  /**
+   * Cập nhật lại danh sách todo trong local storage
+   */
   updateToLocalStorage(): void {
     this.localStorage.setObject(TodoService.todoStorageKey, this.todos);
+    this.filterTodos(this.currentFilter);
     this.updateTodosData();
   }
 
+  /**
+   * Thêm mới 1 todo
+   * @param todoContent: string
+   */
   addTodo(todoContent: string): void {
     const id = new Date(Date.now()).getTime();
     const newTodo = new Todo(id, todoContent);
     this.todos.unshift(newTodo);
-    this.filteredTodos.unshift(newTodo);
     this.updateToLocalStorage();
   }
 
+  /**
+   * Cập nhập trạng thái hoàn thành của 1 todo
+   * @param id: ID todo
+   * @param isComplete: True: hoàn thành, False: chưa hoàn thành
+   */
   changeStatus(id: number, isComplete: boolean): void {
     const index = this.todos.findIndex(todo => todo.id === id);
     this.todos[index].isComplete = isComplete;
     this.updateToLocalStorage();
   }
 
+  /**
+   * Cập nhật nội dung 1 todo
+   * @param id: ID todo
+   * @param content: Nội dung 1 todo
+   */
+  editTodo(id: number, content: string): void {
+    const index = this.todos.findIndex(todo => todo.id === id);
+    this.todos[index].content = content;
+    this.updateToLocalStorage();
+  }
+
+  /**
+   * Xoá 1 todo
+   * @param id: ID todo
+   */
+  deleteTodo(id: number): void {
+    const index = this.todos.findIndex(todo => todo.id === id);
+    this.todos.splice(index, 1);
+    this.updateToLocalStorage();
+  }
+  /**
+   * Cập nhật lại danh sách todo hiển
+   * @private
+   */
   private updateTodosData(): void {
     this.displayTodosSubject.next(this.filteredTodos);
     this.lengthSubject.next(this.filteredTodos.length);
   }
 
+  /**
+   * Lọc danh sách todo
+   * @param filter
+   */
   filterTodos(filter: Filter): void {
     this.currentFilter = filter;
     switch (filter) {
