@@ -1,26 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {TodoService} from '../../services/todo.service';
-import {Todo} from '../../models/todo.model';
-import {Observable} from 'rxjs';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../models/todo.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent implements OnInit {
-
   todos$: Observable<Todo[]>;
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.getTodos();
-  }
-
-  /**
-   *
-   */
-  getTodos() {
     this.todos$ = this.todoService.todos$;
   }
 
@@ -46,6 +38,5 @@ export class TodoListComponent implements OnInit {
    */
   onDeleteTodo(todo: Todo): void {
     this.todoService.deleteTodo(todo.id);
-    this.getTodos();
   }
 }

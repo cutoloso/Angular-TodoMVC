@@ -17,10 +17,14 @@ export class TodoService {
   private lengthSubject: BehaviorSubject<number> = new BehaviorSubject<number>(
     0
   );
+  private hasTodosSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   private currentFilter: Filter = Filter.All;
 
   todos$: Observable<Todo[]> = this.displayTodosSubject.asObservable();
   length$: Observable<number> = this.lengthSubject.asObservable();
+  hasTodos$: Observable<boolean> = this.hasTodosSubject.asObservable();
 
   constructor(private localStorage: LocalStorageService) {}
 
@@ -29,7 +33,6 @@ export class TodoService {
    */
   fetchFromLocalStorage(): void {
     this.todos = this.localStorage.getValue(TodoService.todoStorageKey) || [];
-    this.currentFilter = Filter.All;
     this.filteredTodos = [...this.todos];
     this.updateTodosData();
   }
@@ -39,7 +42,7 @@ export class TodoService {
    */
   updateToLocalStorage(): void {
     this.localStorage.setObject(TodoService.todoStorageKey, this.todos);
-    this.filterTodos(this.currentFilter);
+    this.filterTodos(this.currentFilter, false);
     this.updateTodosData();
   }
 
@@ -91,10 +94,17 @@ export class TodoService {
    */
   toggleAll(): void {
     const statusTodos = this.todos.some((todo) => !todo.isComplete);
-    console.log(statusTodos);
     this.todos = this.todos.map((todo) => {
       return { ...todo, isComplete: statusTodos };
     });
+    this.updateToLocalStorage();
+  }
+
+  /**
+   * Xoá các todo đã hoàn thành
+   */
+  clearCompleted(): void {
+    this.todos = this.todos.filter((todo) => !todo.isComplete);
     this.updateToLocalStorage();
   }
 
@@ -105,13 +115,14 @@ export class TodoService {
   private updateTodosData(): void {
     this.displayTodosSubject.next(this.filteredTodos);
     this.lengthSubject.next(this.filteredTodos.length);
+    this.hasTodosSubject.next(this.todos.length > 0);
   }
 
   /**
    * Lọc danh sách todo
    * @param filter
    */
-  filterTodos(filter: Filter): void {
+  filterTodos(filter: Filter, isFiltering: boolean = true): void {
     this.currentFilter = filter;
     switch (filter) {
       case Filter.Active:
@@ -123,6 +134,10 @@ export class TodoService {
       default:
         this.filteredTodos = [...this.todos];
         break;
+    }
+
+    if (isFiltering) {
+      this.updateTodosData();
     }
   }
 }

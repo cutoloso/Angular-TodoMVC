@@ -1,13 +1,22 @@
-<div
-  class="footer d-flex justify-content-between align-items-center">
+<div class="footer d-flex justify-content-between align-items-center">
   <span class="item-count">{{ length }} item{{ length > 0 ? "s" : "" }}</span>
   <div class="d-flex align-items-center">
     <button
       type="button"
       class="filter-btn"
-      *ngFor="let btn of filterButtons" [class.active]="btn.isActive">
+      *ngFor="let btn of filterButtons"
+      [class.active]="btn.isActive"
+      (click)="filterTodos(btn.type)"
+    >
       {{ btn.label }}
     </button>
   </div>
-  <button type="button" class="filter-btn clea-complete-btn">Clear Complete</button>
+  <button
+    type="button"
+    class="filter-btn clear-complete-btn"
+    [class.visible]="hasComplete$ | async"
+    (click)="clearCompleted()"
+  >
+    Clear Completed
+  </button>
 </div>

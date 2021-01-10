@@ -5,7 +5,7 @@ export interface FilterButton {
 }
 
 export enum Filter {
-  All,
-  Active,
-  Complete,
+  All = 'all',
+  Active = 'active',
+  Complete = 'complete',
 }
