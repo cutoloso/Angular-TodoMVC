@@ -1,29 +1,42 @@
 <div
   class="todo-item d-flex justify-content-between align-items-center"
   (mouseover)="isHover = true"
-  (mouseleave)="isHover = false">
+  (mouseleave)="isHover = false"
+>
   <div class="todo d-flex align-items-center w-100">
-    <input type="checkbox" [id]="todo.id"
-           class="todo-checkbox d-none"
-          [checked]="todo.isComplete"
-          (change)="changeTodoStatus()">
-    <label [for]="todo.id" class="todo-label w-100" [class.is-checked]="todo.isComplete">{{todo.content}}</label>
+    <input
+      type="checkbox"
+      [id]="todo.id"
+      class="todo-checkbox d-none"
+      [checked]="todo.isComplete"
+      (change)="changeTodoStatus()"
+    />
+    <label
+      [for]="todo.id"
+      class="todo-label w-100"
+      [class.is-checked]="todo.isComplete"
+      >{{ todo.content }}</label
+    >
   </div>
   <div class="d-flex justify-content-between align-items-center action-buttons">
-    <span class="icon-wrapper text-center edit-btn text-info"
-          [hidden]="todo.isComplete"
-          [class.active]="isHover"
-          (click)="isEditing = true">
+    <span
+      class="icon-wrapper text-center edit-btn text-info"
+      [hidden]="todo.isComplete"
+      [class.active]="isHover"
+      (click)="isEditing = true"
+    >
       <i class="eva eva-edit-outline d-block"></i>
     </span>
-    <span class="icon-wrapper text-center delete-btn text-danger"
-          [class.active]="isHover"
-          (click)="onDeleteTodo()">
+    <span
+      class="icon-wrapper text-center delete-btn text-danger"
+      [class.active]="isHover"
+      (click)="onDeleteTodo()"
+    >
       <i class="eva eva-close-outline d-block"></i>
     </span>
   </div>
 
   <form action="" *ngIf="isEditing" class="edit-form" (ngSubmit)="onEditTodo()">
-    <input type="text" name="todo-content" [(ngModel)]="todo.content">
+    <input type="text" name="todo-content" [(ngModel)]="todo.content" />
   </form>
 </div>
