@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Todo} from '../../models/todo.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Todo } from '../../models/todo.model';
 
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
-  styleUrls: ['./todo-item.component.scss']
+  styleUrls: ['./todo-item.component.scss'],
 })
 export class TodoItemComponent implements OnInit {
   @Input() todo: Todo;
@@ -15,16 +15,18 @@ export class TodoItemComponent implements OnInit {
   isHover: boolean;
   isEditing: boolean;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   /**
    * Cập nhật trạng thái todo
    */
   changeTodoStatus(): void {
-    this.changeStatus.emit({...this.todo, isComplete: !this.todo.isComplete});
+    this.changeStatus.emit({
+      ...this.todo,
+      isComplete: !this.todo.isComplete,
+    });
   }
 
   /**
